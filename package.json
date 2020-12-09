@@ -1,0 +1,27 @@
+{
+  "name": "record-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huyluongvan1998/Record-System.git"
+  },
+  "author": "Jack",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/huyluongvan1998/Record-System/issues"
+  },
+  "homepage": "https://github.com/huyluongvan1998/Record-System#readme",
+  "dependencies": {
+    "config": "^3.3.3",
+    "express": "^4.17.1",
+    "express-validator": "^6.8.0",
+    "mongoose": "^5.11.5",
+    "nodemon": "^2.0.6"
+  }
+}

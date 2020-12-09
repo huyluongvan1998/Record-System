@@ -1,0 +1,3 @@
+{
+    "mongoUrl": "mongodb+srv://jackluong:node123456@react-web-with-db.kcyw3.mongodb.net/Record-System?retryWrites=true&w=majority"
+}
