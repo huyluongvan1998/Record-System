@@ -8,8 +8,15 @@ const User = require('../../models/User');
 //@desc: Get hello message
 //@access: Public.
 
-router.get('/', (req, res) => {
-    res.send('hello from api');
+router.get('/', async (req, res) => {
+    try {
+        const user = await User.find()
+
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ errors: 'Server Error '});
+    }
 })
 
 //@route: Post Route
@@ -61,6 +68,22 @@ router.post('/',[
         res.status(500).json({ errors : 'Server Error '});
     }
 })
+
+//@route Delete Route
+//@desc: Delete a User
+//access: PRIVATE
+
+router.delete('/:id', async (req, res ) => {
+    try {
+        const user = await User.findByIdAndRemove({ _id: req.params.id });
+        
+        res.send('Delete Successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ errors : 'Server Error '});
+    }
+})
+
 
 
 module.exports = router;

@@ -1,0 +1,35 @@
+.header{
+    background-color: #222;
+    color:white;
+    display: grid;
+    grid-template-columns: 10% auto 10%;
+    grid-template-rows: 10% auto 10%;
+    padding-top: 2em;
+    font-size: 14px;
+    font-family: 'Lato', sans-serif;
+    line-height: 2.5;
+    padding: 25px 30px;
+    margin-bottom: 2rem;
+}
+.header div{
+    height: 30%;
+}
+.center{
+    text-align: center;
+}
+.header img{
+    height: 100px;
+    background: none;
+    border:none;
+    -webkit-animation:spin 8s linear infinite;
+    -moz-animation:spin 8s linear infinite;
+    animation:spin 8s linear infinite;
+}
+
+
+
+/* spining icon */
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
