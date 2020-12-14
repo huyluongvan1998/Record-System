@@ -26,6 +26,51 @@
     animation:spin 8s linear infinite;
 }
 
+.ui-table{
+    width: 100%;
+    border: 1px solid rgba(34, 36, 38, .15);
+    color: rgba(0, 0, 0, .87);
+    border-spacing: 0;
+    text-align: left;
+}
+.ui-table th{
+    font-size: 1em;
+    padding: 1em;
+    background-color: rgba(34, 36, 38, .4);
+}
+.ui-table td {
+    padding: 1em;
+}
+.container {
+    margin: 0 5em;
+}
+
+.modals{
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 200;
+}
+
+.form-data {
+    display: inline-flex;
+    float: left;
+    flex-flow: column;
+}
+.form-data *{
+    margin: 1em 0;
+}
+.show{
+    opacity: 1;
+    visibility: unset;
+}
+.hide{
+    opacity: 0;
+    visibility: hidden;
+}
 
 
 /* spining icon */
