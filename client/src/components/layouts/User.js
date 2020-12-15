@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import PropTypes from 'prop-types'
-import {getUser, getUserById, addUser, displayModal} from '../../action/user';
+import {getUser, getUserById, addUser, displayModal, updateUser, deleteUser} from '../../action/user';
 import {connect} from 'react-redux';
 
 
 const User = ({getUser, addUser, displayModal, 
         getUserById,
+        updateUser,
+        deleteUser,
         user: {
         users,
         user,
@@ -41,7 +43,6 @@ const User = ({getUser, addUser, displayModal,
         gender
     } = formData;
 
-    let edit = false;
 
     const onChangeHandler = e => {
         setFormData({
@@ -49,10 +50,10 @@ const User = ({getUser, addUser, displayModal,
             [e.target.name]: e.target.value
         })
     }
-    const onSubmitHandler = e => {
+    const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        user ? addUser(formData, !edit) : addUser(formData, edit);
+        user ? updateUser(formData, user._id) : addUser(formData);
     }
 
     const clearState = () => {
@@ -79,8 +80,8 @@ const User = ({getUser, addUser, displayModal,
                 </thead>
                 <tbody>
                     {
-                        users.map((user, idx) => (
-                            <tr key={idx}>
+                        users.map((user) => (
+                            <tr key={user._id} >
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td>{user.age}</td>
@@ -91,7 +92,9 @@ const User = ({getUser, addUser, displayModal,
                                     >
                                         EDIT
                                     </button>
-                                    <button className="btn btn-primary mx-1">
+                                    <button className="btn btn-danger mx-1"
+                                            onClick={() => deleteUser(user._id)}
+                                    >
                                         DELETE
                                     </button>
                                 </td>
@@ -100,12 +103,12 @@ const User = ({getUser, addUser, displayModal,
                     }
                 </tbody>
             </table>
-            <div className="form-container">
-                <h2>Input User</h2>
+            <div className={`${isShow ? 'show' : 'hide'} form-container`}>
                 <form className="form form-data" onSubmit={(e) => {
                     onSubmitHandler(e);
                     clearState();
                 }}>
+                <h2>Input User</h2>
                     <input
                         type="text"
                         placeholder='Name'
@@ -151,8 +154,10 @@ User.propTypes = {
     addUser: PropTypes.func.isRequired,
     displayModal: PropTypes.func.isRequired,
     getUserById: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({user: state.user})
 
-export default connect(mapStateToProps, {getUser, addUser, displayModal, getUserById})(User);
+export default connect(mapStateToProps, {getUser, addUser, displayModal, getUserById, updateUser, deleteUser})(User);

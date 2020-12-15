@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 })
 
 //@route: Post Route
-//@desc: Create and Update user
+//@desc: Create a user
 //@access: Private.
 
 router.post('/',[
@@ -51,13 +51,7 @@ router.post('/',[
         const user = await User.findOne({ email });
         // if user existed then UPDATE
         if(user){
-            res.json(
-                await User.findOneAndUpdate(
-                    {email},
-                    newUser,
-                    {new: true}
-                )
-            )
+            res.status(400).json({ msg: 'User Already Exist'});
         }
         //if not then Create
         const result = new User(newUser);
@@ -69,6 +63,60 @@ router.post('/',[
         res.status(500).json({ errors : 'Server Error '});
     }
 })
+
+
+//@route: PUT Route
+//@desc: UPDATE a user
+//@access: Private.
+
+router.put('/:id',[
+    //   input name     error.msg
+    check('name', 'Enter your Name').not().isEmpty(),
+    check('email', 'Enter your valid Email ').isEmail()
+] ,async (req ,res) => {
+    //handle errors from Check
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors : errors.array()});
+    }
+
+    const {
+        name,
+        email,
+        age,
+        gender
+    } = req.body;
+
+    const newUser = {}
+    if(name) newUser.name = name;
+    if(email) newUser.email = email;
+    if(age) newUser.age = age;
+    if(gender) newUser.gender = gender;
+
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id : req.params.id },
+            newUser,
+            {new: true}
+            );
+        // if user existed then UPDATE
+        if(!user){
+            res.status(400).json({ msg: 'User not Found'});
+        }
+        //if not then Create
+        ;
+        res.json(user);
+        await user.save();
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ errors : 'Server Error '});
+    }
+})
+
+
+
+
 
 //@route Delete Route
 //@desc: Delete a User

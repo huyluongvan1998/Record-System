@@ -1,5 +1,5 @@
 import { GET_USER, USER_ERROR, TOGGLE_SHOW, ADD_USER
-    ,GET_USER_BY_ID, UPDATE_USER
+    ,GET_USER_BY_ID, UPDATE_USER, DELETE_USER
 } from './type';
 
 
@@ -35,10 +35,22 @@ export default (state = INITIAL_STATE, action) => {
                 users: [...state.users, payload],
                 loading: false
             }
-        case UPDATE_USER: 
+        case DELETE_USER:
+            const removeIndex = state.users.findIndex(user => user._id === payload)
+            state.users.splice(removeIndex, 1);
             return {
                 ...state,
-                users: state.users.map(user => user._id === payload.id ? {...user, payload} : user)
+                users: state.users,
+                loading: false
+            }
+        case UPDATE_USER: 
+        const index = state.users.findIndex(user => user._id === payload._id);
+        state.users.splice(index, 1, payload);
+        console.log(state.users);
+            return {
+                ...state,
+                users: state.users,
+                loading:false
             }
         case USER_ERROR:
             return {
